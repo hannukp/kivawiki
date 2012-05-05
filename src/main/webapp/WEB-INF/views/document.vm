@@ -1,0 +1,31 @@
+#define( $navigation )
+<a href="$t.url("/edit/$proj$uri_file")">Edit</a>.
+<a href="$t.url("/view/$proj$uri_file")">Source</a>.
+<a href="$t.url("/view/$proj$uri_parent")">Directory</a>.
+<a href="$t.url("/log/$proj$uri_file")">Log</a>.
+<a href="$t.url("/view/$proj$uri?print=1")">Print view</a>.
+#end
+
+#define( $body )
+<div id="bodyheader" class="debug-document-header">
+<p class="lastmodified">Last modified $date.format("yyyy-MM-dd @ HH:mm", $info.date) ($date.whenIs($info.date)) by $info.author.</p>
+
+#if ($data_errors)
+    <div class="errorbox">
+    <p>Errors in document:</p>
+    <ul>
+    #foreach($error in $data_errors)
+    	<li>$esc.xml($error)</li>
+    #end
+    </ul>
+    </div>
+#end
+</div>
+
+<div id="bodycontent" class="article debug-document">
+$data
+</div>
+#end
+
+#parse( "base.vm" )
+ 

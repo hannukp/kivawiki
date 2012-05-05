@@ -1,0 +1,84 @@
+<ehcache>
+	<!-- Note: cache directory changes with every version,
+	 so that previous version's cached files won't confuse
+	 new version (they might deserialize to something the 
+	 new version does not expect and fail at runtime). -->
+	<diskStore path="java.io.tmpdir/kivawikicache${project.version}" />
+		
+	<cache name="html" 
+		maxElementsInMemory="1000"
+		maxElementsOnDisk="10000"
+		overflowToDisk="true"
+		diskPersistent="false"
+		timeToLiveSeconds="600" />
+	
+	<cache name="file" 
+		maxElementsInMemory="1000"
+		maxElementsOnDisk="10000"
+		overflowToDisk="true"
+		diskPersistent="false"
+		timeToLiveSeconds="3600" />
+	
+	<cache name="title" 
+		maxElementsInMemory="1000"
+		maxElementsOnDisk="10000"
+		overflowToDisk="true"
+		diskPersistent="false"
+		timeToLiveSeconds="3600" />
+	
+	<cache name="info" 
+		maxElementsInMemory="1000"
+		maxElementsOnDisk="10000"
+		overflowToDisk="true"
+		diskPersistent="false"
+		timeToLiveSeconds="3600" />
+	
+	<cache name="ls" 
+		maxElementsInMemory="1000"
+		maxElementsOnDisk="10000"
+		overflowToDisk="true"
+		diskPersistent="false"
+		timeToLiveSeconds="3600" />
+		
+	<cache name="auth" 
+		maxElementsInMemory="1000"
+		maxElementsOnDisk="10000"
+		overflowToDisk="true"
+		diskPersistent="false"
+		timeToLiveSeconds="3600" />
+	
+	<cache name="search" 
+		maxElementsInMemory="1000"
+		maxElementsOnDisk="10000"
+		overflowToDisk="true"
+		diskPersistent="false"
+		timeToLiveSeconds="3600" />
+	
+	<cache name="orphan" 
+		maxElementsInMemory="1000"
+		maxElementsOnDisk="10000"
+		overflowToDisk="true"
+		diskPersistent="false"
+		timeToLiveSeconds="3600" />
+	
+	<cache name="sitemap" 
+		maxElementsInMemory="1000"
+		maxElementsOnDisk="10000"
+		overflowToDisk="true"
+		diskPersistent="false"
+		timeToLiveSeconds="3600" />
+	
+	<cache name="repo" 
+		maxElementsInMemory="1000"
+		maxElementsOnDisk="10000"
+		overflowToDisk="true"
+		diskPersistent="false"
+		timeToLiveSeconds="3600" />
+	
+	<cache name="target" 
+		maxElementsInMemory="1000"
+		maxElementsOnDisk="10000"
+		overflowToDisk="true"
+		diskPersistent="false"
+		timeToLiveSeconds="3600" />
+</ehcache>

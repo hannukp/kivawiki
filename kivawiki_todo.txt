@@ -1,0 +1,50 @@
+-download as PDF (wkhtmltopdf)
+-file uploading
+-recently updated (not just a "log" with list of documents, but also their new/edited contents)
+	-like a "blog"
+	-only show additions/edits, don't show removals
+-abbreviations.txt, a file with abbreviations for all the documents in the wiki. Automatically use <abbr>.
+-publish documents so that anyone can read them if they know the URL (.pub-file)
+-if a document is not found, return a page that links to possible places where that document could've
+ moved. Find when the document existed in history in the past (loop through batches of 50 commits, "svn log -v -l50", timeout in 5 seconds),
+ read that document's contents and find a similar document in HEAD. Also give a link to the old document (?rev=33).  
+
+
+
+http://localhost:8080/kivawiki/
+http://localhost:8080/kivawiki/view/foo/devenv.html
+
+http://svn.apache.org/repos/asf/subversion/trunk/subversion/bindings/javahl/
+http://subclipse.tigris.org/svnClientAdapter.html
+http://subclipse.tigris.org/source/browse/subclipse/trunk/svnClientAdapter/src/javahl/org/tigris/subversion/svnclientadapter/javahl/
+
+
+	<!-- server.xml: -->
+    <Connector port="80" protocol="HTTP/1.1" 
+               connectionTimeout="20000" 
+               redirectPort="8443"
+			   URIEncoding="UTF-8"
+			   />
+MAYBE TODO
+=================
+-show editor errors next to editing text area on correct places
+	-clicking on (!)-mark moves your caret to the error's location
+-better default commit messages: add (minor) if it's a minor edit,
+ add edited section's name if only one section is being edited
+-http://code.google.com/p/ehcache-spring-annotations/wiki/UsingCacheable
+
+
+DONE
+=========
+-link to svn folder
+-auto-save on background
+-section editing
+-display kivadoc warnings
+-read project list from svn, not from postgres
+-run in tomcat root folder => deploy as ROOT.war
+-make sure /static/ files are cached
+	-"one of Expires or Cache-Control max-age, and one of Last-Modified or ETag"
+	-"prefer Expires over Cache-Control: max-age because it is is more widely supported"
+	-strip out Vary header
+-call mvn install:install-file -Dfile=org.tigris.subversion.clientadapter.javahl_1.7.2.jar -DgroupId=svn -DartifactId=javahl -Dversion=1.7.2 -Dpackaging=jar
+-call mvn install:install-file -Dfile=org.tigris.subversion.clientadapter_1.8.0.jar -DgroupId=svn -DartifactId=clientadapter -Dversion=1.8.0 -Dpackaging=jar

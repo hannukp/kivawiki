@@ -1,0 +1,28 @@
+#set ($title = "Login")
+
+#define( $body )
+<div id="bodyheader">
+<h1>$esc.xml($title)</h1>
+
+$t.error($!error)
+
+#if ($proj)
+<em>You must log in with your Subversion credentials in order to view the project &quot;<a href="$repo_url">$esc.xml($proj)</a>&quot;.</em>
+#else
+<em>Please log in using your Subversion credentials.</em>
+#end
+</div>
+
+<div id="bodycontent">
+    <form action="$t.url("/login")" method="post" style="margin: 1em;" class="debug-loginform">
+        <div><div style="width:6em; float:left;"><label for="username">Name:</label></div><input id="username" type="text" name="username" /></div>
+        <div><div style="width:6em; float:left;"><label for="password" style="width:15em;">Password:</label></div><input id="password" type="password" name="password" /></div>
+        <div style="margin-top: 1em">
+        <input type="hidden" name="from" value="#if ($from)$esc.xml($from)#end" />
+        <div style="width:6em; float:left;">&nbsp;</div><input type="submit" value="Login" />
+        </div>
+    </form>
+</div>
+#end
+
+#parse( "base.vm" )

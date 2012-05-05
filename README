@@ -1,0 +1,230 @@
+KivaWiki
+========
+
+KivaWiki is a wiki software built using the following core technologies:
+
+* Subversion as the back-end storage for wiki content.
+* KivaDoc mark-up language, which combines the best of Creole, Asciidoc and 
+  XWiki syntaxes and has a fast parser. 
+
+KivaWiki highlights:
+
+* Subversion back-end lets you checkout an entire wiki repository, edit it 
+  using your favorite text editor and commit the changes when you're done.
+  KivaDocTools is a command-line application that you can run locally to
+  "compile" the entire wiki into HTML. 
+* Ability to set up multiple projects, each mapping to a different Subversion
+  directory.
+* Hierarchical document structure within each project.
+* Directory navigation for projects.
+* Automatically generated sitemap.
+* Section editing.
+* Document preview when editing.
+* Automatically saves your work as a "draft" every minute so you won't
+  lose your edits even if the server or network dies.
+* Full text wiki search.
+* History of edits (straight from 'svn log').
+* User authentication and authorization handled by Subversion.
+* "Print view" for documents, allowing final documents to be printed
+  or exported without navigation elements.
+
+Back-end tech:
+
+* Java 6
+* PostgreSQL 9.x for saving draft documents ( http://www.postgresql.org/ )
+* Spring (IOC, MVC, transactions etc) ( http://www.springsource.org/ )
+* Velocity templates ( http://velocity.apache.org/ )
+* EhCache ( http://ehcache.org/ )
+* Log4j ( http://logging.apache.org/log4j/ )
+* Joda-Time ( http://joda-time.sourceforge.net/ )
+* Several Apache Commons libraries (commons-lang, commons-io, commons-dbcp, 
+  commons-codec) ( http://commons.apache.org/ )
+
+Testing tech:
+
+* JUnit and Mockito for basic testing
+* Selenium/WebDriver for integration testing (see the separate 
+  project "kivawiki-testing")
+
+Missing features:
+
+* KivaWiki performs very well on wiki sites with a few hundred documents
+  and a few hundreds of users. It does aggressive caching on most resources 
+  so it should scale up pretty well -- however, it has not been tested on
+  higher work-loads, so it's possible that there are some bottlenecks
+  that should be fixed.
+* KivaWiki does not support file uploading. The idea is that for larger
+  modifications that require addition of new files, you would do
+  the modifications off-line on a Subversion check-out, use KivaDocTools
+  to verify that your changes are valid, and commit it all in one go.
+
+
+Q: Why yet another wiki engine?
+
+A: This wiki started from the idea of saving the wiki's contents in  
+Subversion, along with source code and everything else. I also wanted 
+a wiki that supports multiple projects and directory hierarchies. 
+The original implementation was written in Python and Django, using AsciiDoc 
+for the syntax. AsciiDoc appeared to be too slow and unsecure for a wiki, so 
+I wrote a faster and improved mark-up language translator in Java (KivaDoc) 
+and finally ported the wiki-software to Java as well. Over time it grew to have 
+more of the basic features that one would expect from a wiki. It's a wiki
+that scratched my own itch and a wiki that I'm happy to use myself.
+It's simple, hierarchical and lets you edit the wiki off-line using your
+favorite tools.
+
+
+
+
+Setting up KivaWiki runtime environment
+--------------------------------------
+
+=== Setting up PostgreSQL
+
+KivaWiki requires PostgreSQL version 9.x.
+
+Create a user called "kivawiki" with password "kivawiki", and finally
+create a database called "kivawiki" owned by "kivawiki".
+
+You'll then have to import the database schema. This can be done
+either by manually running the sql files from src/main/db/migrations,
+or by using the Maven migration plugin:
+
+ mvn db-migration:migrate
+
+
+=== Installing Subversion
+
+KivaWiki uses Subversion JavaHL bindings for running Subversion.
+The Java-libraries needed by JavaHL are in lib-directory and should
+be installed by Maven automatically. But the native Subversion
+libraries are platform-specific and have to be installed manually. 
+Installation instructions for some platforms:
+
+==== Ubuntu
+
+ $ sudo apt-get install libsvn
+ $ sudo apt-get install libsvn-java
+
+==== Windows
+
+Install Slik Subversion (http://sliksvn.com/) with Java bindings.
+SlikSvn's bin directory needs to be in PATH. In particular, KivaWiki
+uses the DLL file ++$SlikSvn/bin/libsvnjavahl-1.dll++.
+
+
+=== Setting up Subversion
+
+At the moment, kivawiki needs to be able to checkout and update the projects 
+without providing authentication information. So once you have installed 
+Subversion, run a ++"svn info <url>"++ for your project and have Subversion 
+save your user credentials locally. After that you should be able to run 
+the same command ++"svn info <url>"++ without any user input.
+
+
+=== Setting up environment properties
+
+Environment variable KIVAWIKI_PROPERTIES needs to point to a properties-file
+in the local filesystem in which the user running the web application
+(e.g. user running Tomcat) has read access.
+
+Example:
+
+ export KIVAWIKI_PROPERTIES=file:///C:/kivawiki/kivawiki.properties
+
+The contents of the properties file are as follows:
+
+ workdir=C:/kivawiki/workdir
+ projects=file:///C:/kivawiki/projects.txt
+ dbUrl=jdbc:postgresql://localhost:5432/kivawiki
+ dbUsername=kivawiki
+ dbPassword=kivawiki
+
+"workdir" needs to point to a path in the local filesystem in which the 
+user running the web application (e.g. user running Tomcat) has read/write
+access. It is used for taking check-outs of all Subversion projects.
+
+"projects" needs to point to an UTF-8 encoded text file which lists 
+the projects that should be displayed in the wiki.  
+
+The projects-file has the following format for each line:
+
+ <repo-url> <project-name> <project-title>
+
+Example contents of the projects-file:
+
+ http://subversion.example.com/doc/ root Interesting company project 
+ file:///C:/kivawiki/myrepo mylocal My local wiki!
+
+The root URL of the wiki site will then list these projects.
+
+"projects" property may also point to a Subversion URL, in which case 
+++"svn cat"++ command is used to read the file. The URL needs to have 
+"svn:"-prefix. For example:
+
+ projects=svn:http://subversion.example.com/doc/projects.txt
+
+In this case, the application expects that the command 
+++"svn cat http://subversion.example.com/doc/projects.txt"++ 
+will show you the list of projects. 
+
+Finally dbUrl, dbUsername, dbPassword are the JDBC connection
+parameters to the kivawiki database.
+
+
+Building KivaWiki
+----------------
+
+The project is built with Maven ( http://maven.apache.org/ ).
+
+If you have done the environment set-up of previous section, you
+should be able to run KivaWiki's integration tests. If not,
+you'll have to specify "-Dmaven.test.skip=true" as an argument to Maven.
+
+Build for SVN version 1.7.x:
+
+ mvn clean install
+
+Build for SVN version 1.6.x:
+
+ mvn -Poldsvn clean install
+
+The "war" file has been tested in Tomcat and Jetty application containers.
+
+
+Running KivaWiki development mode
+--------------------------------
+
+After setting up the KivaWiki environment, you can run the wiki in development
+mode:
+
+ mvn jetty:run
+
+Then navigate to:
+
+ http://localhost:8080/kivawiki/
+
+
+
+License
+-------
+
+Copyright 2012 Hannu Kankaanpää
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License
+
+
+Author
+------
+
+Hannu Kankaanpää <hannu.kp@gmail.com>

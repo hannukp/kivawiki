@@ -1,0 +1,12 @@
+<tools>
+	<toolbox scope="request" xhtml="true">
+		<tool key="t" class="org.kivawiki.velocitytools.MyVelocityTool" />
+		<tool class="org.apache.velocity.tools.generic.EscapeTool" />
+		<tool class="org.apache.velocity.tools.generic.DateTool" format="yyyy-MM-dd" />
+		<tool class="org.apache.velocity.tools.generic.ComparisonDateTool" format="yyyy-MM-dd" depth="1"
+			skip="month,week,millisecond" bundle="org.apache.velocity.tools.generic.times" />
+		<tool class="org.apache.velocity.tools.generic.DisplayTool"/>
+	</toolbox>
+
+	<data type="string" key="version" value="${project.version}" />
+</tools>

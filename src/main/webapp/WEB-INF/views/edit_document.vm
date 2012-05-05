@@ -1,0 +1,70 @@
+#set ($title = "Editing $uri in project $proj")
+
+#define ( $header_extras )
+<script type="text/javascript">editorCode();</script>
+#end
+
+#define( $navigation )
+<a href="$t.url("/view/$proj$uri_html")">View</a>.
+<a href="$t.url("/view/$proj$uri")">Source</a>.
+<a href="$t.url("/view/$proj$uri_parent")">Directory</a>.
+<a href="$t.url("/log/$proj$uri")">Log</a>.
+#end
+
+#define( $body )
+<div id="bodyheader" class="debug-edit-header">
+<h1>$esc.xml($title)</h1>
+</div>
+
+<div id="bodycontent" class="debug-edit">
+#if (!$originalDoc)
+$t.warning('New document.')
+#end
+
+$t.error($error)
+<div></div>
+
+<form action="$t.url("/edit/$proj$uri")" method="post" class="edit">
+    <div>
+    <textarea name="edit" rows="30" cols="120" class="autocomplete">$esc.xml($docFragment)</textarea>
+    <input type="hidden" name="rev" value="$rev" />
+	<input type="hidden" name="originalDoc" value="$originalDoc" />
+	<input type="hidden" name="section" value="$!section" />
+    <p>
+        Message: <input type="text" name="commitMessage" value="$esc.xml($commitMessage)" size="100" />
+    </p>
+    <p>
+        <input type="submit" name="save" value="Save" />
+        <input type="submit" name="preview" value="Preview" />
+		<a href="$t.url('/static/help.html')" target="_blank" class="edit_help">Editing help</a> |
+		<a href="$t.url("/drafts/$proj/")" target="_blank" class="drafts">Drafts</a>
+		<span id="draft_saved"></span>
+    </p>
+	<a id="save_draft" style="display:none" href="$t.url("/drafts/$proj/save?uri=$uri")"></a>
+    </div>
+</form>
+
+#if ($preview)
+<h2>Preview</h2>
+
+#if ($preview_errors)
+    <div class="errorbox">
+    <p>Errors in document:</p>
+    <ul>
+    #foreach($error in $preview_errors)
+    	<li><a href="#" onclick="setCaretPositionByLine($('.autocomplete')[0], $error.lineNumber)">$esc.xml($error)</a></li>
+    #end
+    </ul>
+    </div>
+#end
+
+<div class="preview article">
+$preview
+</div>
+</div>
+#end
+
+</div>
+#end
+
+#parse( "base.vm" )

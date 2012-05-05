@@ -1,0 +1,47 @@
+#set ($title = "Index of $proj$uri")
+
+#define( $navigation )
+<a href="$t.url("/log/$proj$uri")">Log</a>.
+#end
+
+#define( $body )
+<div id="bodyheader" class="debug-index-header">
+<h1>$esc.xml($title)</h1>
+</div>
+
+<div id="bodycontent" class="debug-index">
+<table class="listing">
+    <tr>
+        <th class="name">Name</th>
+        <th class="title">Title</th>
+        <th class="date">Date</th>
+        <th class="author">Author</th>
+        <th class="revision">Revision</th>
+        <th class="size">Size</th>
+        <th class="log">Log</th>
+		<th class="svn">Svn</th>
+    </tr>
+#foreach($e in $files)
+    <tr class="#if ($e.title)doc#elseif($e.info.isFile)file#else dir#end">
+        <td class="name">
+            #if( $e.proj )
+                #set( $e_url = $t.url("/view/$e.proj$e.uri") )
+            #else
+				#set( $e_url = $t.url("/") )
+            #end
+            <a href="$e_url">$e.name#if (!$e.info.isFile)/#end</a>
+        </td>
+        <td class="title">#if ($e.title)<a href="$t.url("/view/$e.proj$e.uri_html")">$esc.xml($e.title)</a>#end</td>
+        <td class="date">#if ($e.info.date)<span class="date_date">$date.format($e.info.date)</span> <span class="date_time">@$date.format("HH:mm", $e.info.date)</span>#end</td>
+        <td class="author">#if ($e.info.author)$esc.xml($e.info.author)#end</td>
+        <td class="revision">$!e.info.rev</td>
+        <td class="size">$display.alt($e.info.size, '')</td>
+        <td class="log">#if ($e.uri)<a href="$t.url("/log/$e.proj$e.uri")">#</a>#end</td>
+        <td class="svn">#if ($e.uri)<a href="$esc.xml("${repo}${e.uri}")">#</a>#end</td>
+    </tr>
+#end
+</table>
+</div>
+#end
+
+#parse( "base.vm" )

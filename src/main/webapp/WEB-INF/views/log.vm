@@ -1,0 +1,60 @@
+#set( $title = "Log of /$proj$uri" )
+
+#define( $navigation )
+#if (!$is_file)
+<a href="$t.url("/view/$proj$uri")">View</a>.
+#end
+#if ($uri_html)
+<a href="$t.url("/view/$proj$uri_html")">View</a>.
+#end
+#if ($is_file)
+<a href="$t.url("/view/$proj$uri")">Source</a>.
+<a href="$t.url("/view/$proj$uri_parent")">Directory</a>.
+#end
+#end
+
+#define( $body )
+<div id="bodyheader" class="debug-log-header">
+<h1>$esc.xml($title)</h1>
+</div>
+
+<div id="bodycontent" class="debug-log">
+
+$t.error($!error)
+
+#if (!$error)
+<table class="listing">
+    <tr>
+        <th class="msg">Message</th>
+        <th class="date">Date</th>
+        <th class="author">Author</th>
+        <th class="revision">Revision</th>
+        <th class="diff">Diff</th>
+        <th class="source">Source</th>
+    </tr>
+#foreach($e in $log)
+    <tr>
+        <td class="msg">$display.alt($e.message, "-")
+        #if (!$is_file)
+        <p><ul>
+			#foreach ($p in $e.paths)
+            <li>$p.action : <a href="$t.url("/view/$proj$p.uri?rev=$e.rev")">$esc.xml($p.uri)</a></li>
+			#end
+        </ul></p>
+        #end
+        </td>
+        <td class="date">#if ($e.date)<span class="date_date">$date.format($e.date)</span> <span class="date_time">@$date.format("HH:mm", $e.date)</span>#end</td>
+        <td class="author">$e.author</td> <td class="revision">$e.rev</td>
+        <td class="diff">#if ($e.rev)<a href="$t.url("/diff/$proj$uri?rev=$e.rev")">#</a>#end</td>
+        <td class="source">#if ($e.rev && $is_file)<a href="$t.url("/view/$proj$uri?rev=$e.rev")">#</a>#end</td>
+    </tr>
+#end
+</table>
+#if ($more_start)
+<a href="$t.url("/log/$proj$uri?rev=$more_start")">More...</a>
+#end
+#end ##no errors
+</div>
+#end
+
+#parse( "base.vm" )

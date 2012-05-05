@@ -1,0 +1,26 @@
+#set ($title = "Sitemap for /$proj")
+
+#define( $navigation )
+<a href="$t.url("/view/$proj/")">Directory</a>.
+#end
+
+#define( $body )
+<div id="bodyheader">
+<h1>$esc.xml($title)</h1>
+</div>
+
+<div id="bodycontent">
+$t.error($!error)
+
+<div class="sitemap">
+$!sitemap_html
+</div>
+
+#if ($orphans)
+<p>Orphans have not been linked to from <a href="$t.url("/view/$proj/home.html")">/home.html</a>.</p>
+#end
+
+</div>
+#end
+
+#parse( "base.vm" )

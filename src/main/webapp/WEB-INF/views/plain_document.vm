@@ -1,0 +1,13 @@
+#set( $no_header="true" )
+
+#define( $body )
+<div id="content" class="article">
+$data
+</div>
+
+<div id="footer">
+<p class="lastmodified">Document created on $date.format($info.date).</p>
+</div>
+#end
+
+#parse( "base.vm" )

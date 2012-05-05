@@ -1,0 +1,656 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Editing help</title>
+<link rel="stylesheet" href="kivawiki.css" type="text/css" />
+</head>
+<body id="body">
+<div class="article">
+<h1>Editing help</h1>
+
+<ul>
+<li>Press ctrl+space to auto-complete lines. For example, type "-" on an empty line and press ctrl+space.</li>
+</ul>
+
+<!-- syntax.txt begin -->
+
+<h2><a name="KDOC_HEADER_1"></a><a name="Document Structure"></a>Document Structure</h2>
+<p>Here is an example of a simple document: </p>
+<pre>Document title
+====================
+toc:auto
+attribute2:foo
+
+Document body...</pre><p>The first line of the document is the document title. The second line is a divisor-line (one or more &quot;=&quot;-characters). Then comes a list of  attributes; key:value, key:value.  </p>
+<p>After an empty line, the document itself begins. </p>
+<h2><a name="KDOC_HEADER_2"></a><a name="Document Attributes"></a>Document Attributes</h2>
+<p>Currently recognized attributes are: </p>
+<table>
+ <tr>
+  <th>
+   <p>Attribute </p>
+  </th>
+  <th>
+   <p>Description </p>
+  </th>
+ </tr>
+ <tr>
+  <td>
+   <p>toc:auto </p>
+  </td>
+  <td>
+   <p>Automatically generate a table-of-contents for the document. </p>
+  </td>
+ </tr>
+ <tr>
+  <td>
+   <p>style:&lt;style-sheet-path&gt; </p>
+  </td>
+  <td>
+   <p>Includes the CSS style sheet to the document. </p>
+  </td>
+ </tr>
+</table>
+<h2><a name="KDOC_HEADER_3"></a><a name="Common Structural Elements"></a>Common Structural Elements</h2>
+<table style="width:100%;">
+ <tr>
+  <th style="width:50%;">
+   <p>Syntax </p>
+  </th>
+  <th style="width:50%;">
+   <p>Result </p>
+  </th>
+ </tr>
+ <tr>
+  <td>
+<pre>Header 1
+-------------
+Normal text.
+
+Another paragraph.
+
+== Header 1 (alternative syntax)
+=== Header 2
+==== Header 3
+Some text
+=== Header 2b
+==== Header 3b =======
+Using =-characters at the end of a single-line header is optional.
+===== Header 4
+====== Header 5</pre>  </td>
+  <td>
+   <h2><a name="KDOC_HEADER_4"></a><a name="Header 1"></a>Header 1</h2>
+   <p>Normal text. </p>
+   <p>Another paragraph. </p>
+   <h2><a name="KDOC_HEADER_5"></a><a name="Header 1 (alternative syntax)"></a>Header 1 (alternative syntax)</h2>
+   <h3><a name="KDOC_HEADER_5_1"></a><a name="Header 2"></a>Header 2</h3>
+   <h4><a name="KDOC_HEADER_5_1_1"></a><a name="Header 3"></a>Header 3</h4>
+   <p>Some text </p>
+   <h3><a name="KDOC_HEADER_5_2"></a><a name="Header 2b"></a>Header 2b</h3>
+   <h4><a name="KDOC_HEADER_5_2_1"></a><a name="Header 3b"></a>Header 3b </h4>
+   <p>Using =-characters at the end of a single-line header is optional. </p>
+   <h5><a name="KDOC_HEADER_5_2_1_1"></a><a name="Header 4"></a>Header 4</h5>
+   <h6><a name="KDOC_HEADER_5_2_1_1_1"></a><a name="Header 5"></a>Header 5</h6>
+  </td>
+ </tr>
+ <tr>
+  <td>
+<pre>Text.
+%% Just a note for myself... This line not included in the output.
+More text.</pre>  </td>
+  <td>
+   <p>Text. More text. </p>
+  </td>
+ </tr>
+ <tr>
+  <td>
+<pre>* List starts here
+** List level 2
+*** List level 3
+*Back to level 1
+ * You can also use indentation to go deeper
+  *And deeper
+ *Any number of tabs/spaces is valid.
+  -you can also use "-"-symbol instead of "*"
+  -new list or new indentation level must start with just one bullet-symbol (*/-/#)</pre>  </td>
+  <td>
+   <ul>
+    <li>
+     <p> List starts here </p>
+     <ul>
+      <li>
+       <p> List level 2 </p>
+       <ul>
+        <li>
+         <p> List level 3 </p>
+        </li>
+       </ul>
+      </li>
+     </ul>
+    </li>
+    <li>
+     <p>Back to level 1 </p>
+     <ul>
+      <li>
+       <p> You can also use indentation to go deeper </p>
+       <ul>
+        <li>
+         <p>And deeper </p>
+        </li>
+       </ul>
+      </li>
+      <li>
+       <p>Any number of tabs/spaces is valid. </p>
+       <ul>
+        <li>
+         <p>you can also use &quot;-&quot;-symbol instead of &quot;*&quot; </p>
+        </li>
+        <li>
+         <p>new list or new indentation level must start with just one bullet-symbol (*/-/#) </p>
+        </li>
+       </ul>
+      </li>
+     </ul>
+    </li>
+   </ul>
+  </td>
+ </tr>
+ <tr>
+  <td>
+<pre>#ordered list
+  -nested ordered list
+  -nesting continued
+#second item
+  #nested ordered list
++
+Another paragraph in 2.1.
+  #nested list item 2
+#root level item 3</pre>  </td>
+  <td>
+   <ol>
+    <li>
+     <p>ordered list </p>
+     <ul>
+      <li>
+       <p>nested ordered list </p>
+      </li>
+      <li>
+       <p>nesting continued </p>
+      </li>
+     </ul>
+    </li>
+    <li>
+     <p>second item </p>
+     <ol>
+      <li>
+       <p>nested ordered list </p>
+       <p>Another paragraph in 2.1. </p>
+      </li>
+      <li>
+       <p>nested list item 2 </p>
+      </li>
+     </ol>
+    </li>
+    <li>
+     <p>root level item 3 </p>
+    </li>
+   </ol>
+  </td>
+ </tr>
+</table>
+<h2><a name="KDOC_HEADER_6"></a><a name="Styling"></a>Styling</h2>
+<table style="width:100%;">
+ <tr>
+  <th style="width:50%;">
+   <p>Syntax </p>
+  </th>
+  <th style="width:50%;">
+   <p>Result </p>
+  </th>
+ </tr>
+ <tr>
+  <td>
+<pre>**Bold font** //Emphasis// (% color:red %)[Red text] ++monospace++</pre>  </td>
+  <td>
+   <p><strong>Bold font</strong> <em>Emphasis</em> <span style="color:red;">Red text</span> <code>monospace</code> </p>
+  </td>
+ </tr>
+ <tr>
+  <td>
+<pre>**You can //Mix// (% background-color:yellow %)[and //nest//]** 
+styles (++but **not** in monospace++)</pre>  </td>
+  <td>
+   <p><strong>You can <em>Mix</em> <span style="background-color:yellow;">and <em>nest</em></span></strong>  styles (<code>but **not** in monospace</code>) </p>
+  </td>
+ </tr>
+ <tr>
+  <td>
+<pre>Line~
+break</pre>  </td>
+  <td>
+   <p>Line<br />break </p>
+  </td>
+ </tr>
+ <tr>
+  <td>
+<pre>Special symbols that are recognized and converted to unicode characters: 
+&lt;-&gt;, &lt;=&gt;, -&gt;, &lt;-, =&gt;, &lt;=, &gt;&gt;, &lt;&lt;,  
+&lt;--&gt;, &lt;==&gt;, --&gt;, &lt;--, ==&gt;, &lt;==, 
+---, --, (c), (C), (r), (R), (tm), (TM), ...
+
+You can also use unicode characters directly: ⬆ ⬇ ®</pre>  </td>
+  <td>
+   <p>Special symbols that are recognized and converted to unicode characters:  ↔, ⇔, →, ←, ⇒, ⇐, », «, —, ⟷, ⟺, ⟶, ⟵, ⟹, ⟸,  —, –, ©, ©, ®, ®, ™, ™, … </p>
+   <p>You can also use unicode characters directly: ⬆ ⬇ ® </p>
+  </td>
+ </tr>
+ <tr>
+  <td>
+<pre>(% float:right; background-color: #dde; padding: 1em %)
+[[[A styled block, floating to the right...
+
+Still floating...]]]
+
+(% background-color: #edd; padding: 1em %)
+Styled paragraph...
+
+(% style: invalidlink; padding: 1em %)
+"Style" attribute lets you use css classes.
+
+(% color: blue; list-style-type:square %)
+* You can apply
+* block-level styling ~(% CSS %)
+* to most structural elements
+(% color: red; list-style-type:lower-alpha %)
+   # headers
+   # tables
+   # lists, paragraphs, etc...
+
+(% padding: 1em; background-color: #eef; border: 2px dashed #66d; %)
+**INFO**</pre>  </td>
+  <td>
+   <div style="background-color:#dde; float:right; padding:1em;">
+    <p>A styled block, floating to the right… </p>
+    <p>Still floating… </p>
+   </div>
+   <p style="background-color:#edd; padding:1em;">Styled paragraph… </p>
+   <p class="invalidlink" style="padding:1em;">&quot;Style&quot; attribute lets you use css classes. </p>
+   <ul style="color:blue; list-style-type:square;">
+    <li>
+     <p> You can apply </p>
+    </li>
+    <li>
+     <p> block-level styling (% CSS %) </p>
+    </li>
+    <li>
+     <p> to most structural elements </p>
+     <ol style="color:red; list-style-type:lower-alpha;">
+      <li>
+       <p> headers </p>
+      </li>
+      <li>
+       <p> tables </p>
+      </li>
+      <li>
+       <p> lists, paragraphs, etc… </p>
+      </li>
+     </ol>
+    </li>
+   </ul>
+   <p style="background-color:#eef; border:2px dashed #66d; padding:1em;"><strong>INFO</strong> </p>
+  </td>
+ </tr>
+</table>
+<h2><a name="KDOC_HEADER_7"></a><a name="Advanced Features"></a>Advanced Features</h2>
+<table style="width:100%;">
+ <tr>
+  <th style="width:50%;">
+   <p>Syntax </p>
+  </th>
+  <th style="width:50%;">
+   <p>Result </p>
+  </th>
+ </tr>
+ <tr>
+  <td>
+<pre>image:favicon.ico[Favicon]</pre>  </td>
+  <td>
+   <p><img src="favicon.ico" alt="Favicon" /> </p>
+  </td>
+ </tr>
+ <tr>
+  <td>
+<pre>-http://www.wikipedia.org/
+-http://www.wikipedia.org/[Wikipedia]
+-link:kivawiki.css
+-link:kivawiki.css[Style file]</pre>  </td>
+  <td>
+   <ul>
+    <li>
+     <p><a href="http://www.wikipedia.org/">http://www.wikipedia.org/ </a></p>
+    </li>
+    <li>
+     <p><a href="http://www.wikipedia.org/">Wikipedia</a> </p>
+    </li>
+    <li>
+     <p><a href="kivawiki.css">kivawiki.css </a></p>
+    </li>
+    <li>
+     <p><a href="kivawiki.css">Style file</a> </p>
+    </li>
+   </ul>
+  </td>
+ </tr>
+ <tr>
+  <td>
+<pre>Internal link: {#target}.
+
+(##target##Goal)
+
+Link with text: {#target}[Click **here**].
+
+Section headers may be referenced by the text in the header: {#Advanced Features}, {#Header 3b}.</pre>  </td>
+  <td>
+   <p>Internal link: <a href="#target"> » target</a>. </p>
+   <p>(<a name="target"></a>Goal) </p>
+   <p>Link with text: <a href="#target">Click <strong>here</strong></a>. </p>
+   <p>Section headers may be referenced by the text in the header: <a href="#Advanced%20Features"> » Advanced Features</a>, <a href="#Header%203b"> » Header 3b</a>. </p>
+  </td>
+ </tr>
+ <tr>
+  <td>
+<pre>Escape mark-up with ~~: ~**not bold~**, link~:notlink.png.</pre>  </td>
+  <td>
+   <p>Escape mark-up with ~: **not bold**, link:notlink.png. </p>
+  </td>
+ </tr>
+ <tr>
+  <td>
+<pre>Code:
++++++++++++++++++++
+for (int i = 0; i &lt; 2; i++) {
+  System.out.println("Hello world");
+}          //spaces are preserved
++++++++++++++++++++</pre>  </td>
+  <td>
+   <p>Code: </p>
+<pre>for (int i = 0; i &lt; 2; i++) {
+  System.out.println("Hello world");
+}          //spaces are preserved</pre>  </td>
+ </tr>
+ <tr>
+  <td>
+<pre>Indentation also makes a code-block:
+
+ a       c
+  b     d
+You'll need an empty line before the indented code.
+  Otherwise you'll get normal text.</pre>  </td>
+  <td>
+   <p>Indentation also makes a code-block: </p>
+<pre>a       c
+ b     d</pre>   <p>You'll need an empty line before the indented code.    Otherwise you'll get normal text. </p>
+  </td>
+ </tr>
+ <tr>
+  <td>
+<pre>Comment block:
+%%%%%%%%%%%%%%%%%%%
+With a comment block you can easily comment out pieces of 
+the document that are not finished, or write hidden notes
+for yourself. 
+%%%%%%%%%%%%%%%%%%%</pre>  </td>
+  <td>
+   <p>Comment block: </p>
+  </td>
+ </tr>
+</table>
+<h2><a name="KDOC_HEADER_8"></a><a name="Tables"></a>Tables</h2>
+<table style="width:100%;">
+ <tr>
+  <th style="width:50%;">
+   <p>Syntax </p>
+  </th>
+  <th style="width:50%;">
+   <p>Result </p>
+  </th>
+ </tr>
+ <tr>
+  <td>
+<pre>|a|b|c
+|d|e|f</pre>  </td>
+  <td>
+   <table>
+    <tr>
+     <td>
+      <p>a </p>
+     </td>
+     <td>
+      <p>b </p>
+     </td>
+     <td>
+      <p>c </p>
+     </td>
+    </tr>
+    <tr>
+     <td>
+      <p>d </p>
+     </td>
+     <td>
+      <p>e </p>
+     </td>
+     <td>
+      <p>f </p>
+     </td>
+    </tr>
+   </table>
+  </td>
+ </tr>
+ <tr>
+  <td>
+<pre>|= Name |= Value
+| Bill Gates | $50B
+| John Doe | $50</pre>   <p>Header cells start with &quot;=&quot;-character. </p>
+  </td>
+  <td>
+   <table>
+    <tr>
+     <th>
+      <p>Name </p>
+     </th>
+     <th>
+      <p>Value </p>
+     </th>
+    </tr>
+    <tr>
+     <td>
+      <p>Bill Gates </p>
+     </td>
+     <td>
+      <p>$50B </p>
+     </td>
+    </tr>
+    <tr>
+     <td>
+      <p>John Doe </p>
+     </td>
+     <td>
+      <p>$50 </p>
+     </td>
+    </tr>
+   </table>
+  </td>
+ </tr>
+ <tr>
+  <td>
+<pre>(% width: 100% %)
+|= (% width: 20% %) Name | (% width: 60% %) Bill Gates | John Doe
+|= Value |  $50B | (%color:red%) $50</pre>  </td>
+  <td>
+   <table style="width:100%;">
+    <tr>
+     <th style="width:20%;">
+      <p>Name </p>
+     </th>
+     <td style="width:60%;">
+      <p>Bill Gates </p>
+     </td>
+     <td>
+      <p>John Doe </p>
+     </td>
+    </tr>
+    <tr>
+     <th>
+      <p>Value </p>
+     </th>
+     <td>
+      <p>$50B </p>
+     </td>
+     <td style="color:red;">
+      <p>$50 </p>
+     </td>
+    </tr>
+   </table>
+  </td>
+ </tr>
+ <tr>
+  <td>
+<pre>|=========================================
+|Use|table|delimiters (~|===).
+
+|then
+|you
+|can
+
+|add
+|some
+|whitespace.
+
+|=========================================</pre>   <p>The amount of columns in a table is determined from its first line. Also note that if you want to include the pipe-character (|) inside a table, you'll have to escape it with ~. </p>
+  </td>
+  <td>
+   <table>
+    <tr>
+     <td>
+      <p>Use </p>
+     </td>
+     <td>
+      <p>table </p>
+     </td>
+     <td>
+      <p>delimiters (|===). </p>
+     </td>
+    </tr>
+    <tr>
+     <td>
+      <p>then </p>
+     </td>
+     <td>
+      <p>you </p>
+     </td>
+     <td>
+      <p>can </p>
+     </td>
+    </tr>
+    <tr>
+     <td>
+      <p>add </p>
+     </td>
+     <td>
+      <p>some </p>
+     </td>
+     <td>
+      <p>whitespace. </p>
+     </td>
+    </tr>
+   </table>
+  </td>
+ </tr>
+ <tr>
+  <td>
+<pre>|=========================================
+|a|b
+|c|
+
+~|Nested~|tables
+~|can be~|done
+
+|=========================================</pre>  </td>
+  <td>
+   <table>
+    <tr>
+     <td>
+      <p>a </p>
+     </td>
+     <td>
+      <p>b </p>
+     </td>
+    </tr>
+    <tr>
+     <td>
+      <p>c </p>
+     </td>
+     <td>
+      <table>
+       <tr>
+        <td>
+         <p>Nested </p>
+        </td>
+        <td>
+         <p>tables </p>
+        </td>
+       </tr>
+       <tr>
+        <td>
+         <p>can be </p>
+        </td>
+        <td>
+         <p>done </p>
+        </td>
+       </tr>
+      </table>
+     </td>
+    </tr>
+   </table>
+  </td>
+ </tr>
+ <tr>
+  <td>
+<pre>|= (% width: 4em; colspan:2; rowspan:2 %) BOX BIX BAX | a
+|b
+|(%colspan:3; background-color: yellow %)c </pre>   <p><code>rowspan</code> and <code>colspan</code> are treated in a special way, not as CSS styles  but as attributes of the cell. </p>
+  </td>
+  <td>
+   <table>
+    <tr>
+     <th style="width:4em;" rowspan="2" colspan="2">
+      <p>BOX BIX BAX </p>
+     </th>
+     <td>
+      <p>a </p>
+     </td>
+    </tr>
+    <tr>
+     <td>
+      <p>b </p>
+     </td>
+    </tr>
+    <tr>
+     <td style="background-color:yellow;" colspan="3">
+      <p>c </p>
+     </td>
+    </tr>
+   </table>
+  </td>
+ </tr>
+</table>
+
+<!-- syntax.txt end -->
+
+</div>
+</body>
+</html>

@@ -1,0 +1,27 @@
+#set ($title = "Results for query $esc.xml($query) in /$proj")
+
+#define( $navigation )
+<a href="$t.url("/view/$proj/")">Directory</a>.
+#end
+
+#define( $body )
+<div id="bodyheader">
+<h1>$esc.xml($title)</h1>
+</div>
+
+<div id="bodycontent" class="searchresults">
+#if ($results.isEmpty())
+    $t.info('No results found.')
+#else
+    <ul>
+    #foreach($e in $results)
+        <li><p><a href="$t.url("/view/$proj$e.uri")">$esc.xml($e.title)</a></p>
+            <p>($esc.xml($e.sample))</p>
+        </li>
+    #end
+    </ul>
+#end
+</div>
+#end
+
+#parse( "base.vm" )

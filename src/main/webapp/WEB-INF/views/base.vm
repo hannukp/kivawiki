@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
+<title>$esc.xml($title)</title>
+<!-- Kivawiki v$version -->
+<link rel="shortcut icon" href="$t.url("/static/favicon.ico")" />
+<link rel="stylesheet" href="$t.url("/static/kivawiki.css")" type="text/css" />
+$!extra_styles
+<script type="text/javascript" src="$t.url("/static/jquery-1.6.2.min.js")"></script>
+<script type="text/javascript" src="$t.url("/static/jquery.color.js")"></script>
+<script type="text/javascript" src="$t.url("/static/jquery-fieldselection.pack.js")"></script>
+<script type="text/javascript" src="$t.url("/static/kivawiki.js")"></script>
+$!header_extras
+</head>
+<body>
+#if (!$no_header)
+<div id="kivaheader" class="debug-header">
+    <div id="kivanavigation1">
+        <div id="kivalogin">
+            #if ($username)
+            <form action="$t.url("/login/logout")" method="post">
+                <div>
+                Logged in as $esc.xml($username).
+                <input type="submit" value="Logout" class="debug-logout" />
+                </div>
+            </form>
+            #else
+                <a href="$t.url("/login")" class="debug-login">Login</a>.
+            #end
+        </div>
+        <div id="searchform">
+            <form action="$t.url("/search")" method="get">
+                <div>
+                <label for="search">Search:</label>
+                <input type="hidden" name="proj" value="$proj" />
+                <input id="search" type="text" name="q" class="debug-search" />
+                </div>
+            </form>
+        </div>
+        <div id="kivatitle"><a style="color: black;" href="$t.url("/")">Kivawiki v$version</a>. $!navigation</div>
+        <div style="clear:both;"></div>
+    </div>
+    <div id="kivanavigation2">
+        #foreach($n in $navigation_items)
+            / <a href="$t.url($n.url)">$esc.xml($n.title)</a>
+        #end
+    </div>
+</div>
+#end
+<div id="body">
+$body
+</div>
+</body>
+</html>

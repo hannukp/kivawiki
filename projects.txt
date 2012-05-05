@@ -1,0 +1,2 @@
+file:///home/kivawiki/docrepo1 foo Foo System
+file:///home/kivawiki/docrepo2 bar Bar Project

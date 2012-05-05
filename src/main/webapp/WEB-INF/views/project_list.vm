@@ -1,0 +1,31 @@
+#set( $title = "Projects" )
+
+#define( $navigation )
+#end
+
+#define( $body )
+<div id="bodyheader" class="debug-projects">
+<h1>$esc.xml($title)</h1>
+</div>
+
+<div id="bodycontent">
+<table class="listing">
+    <tr>
+        <th class="name">Name</th>
+        <th class="home">Home page</th>
+        <th class="sitemap">Sitemap</th>
+        <th class="sitemap">Log</th>
+    </tr>
+#foreach($e in $projs)
+    <tr class="dir">
+        <td class="name"><a href="$t.url("/view/$e.proj/")">$esc.xml($e.proj)</a></td>
+        <td class="home"><a href="$t.url("/view/$e.proj/home.html")">$esc.xml($e.title)</a></td>
+        <td class="sitemap"><a href="$t.url("/sitemap/$e.proj")">#</a></td>
+        <td class="log"><a href="$t.url("/log/$e.proj/")">#</a></td>
+    </tr>
+#end
+</table>
+</div>
+#end
+
+#parse( "base.vm" )

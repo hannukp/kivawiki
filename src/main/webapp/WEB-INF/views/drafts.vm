@@ -1,0 +1,21 @@
+#set ($title = "Drafts for /$proj")
+
+#define( $navigation )
+<a href="$t.url("/view/$proj/")">Directory</a>.
+#end
+
+#define( $body )
+<div id="bodyheader">
+<h1>$esc.xml("Drafts for /$proj")</h1>
+</div>
+
+<div id="bodycontent">
+<ul>
+#foreach($d in $drafts)
+	<li><a href="$t.url("/drafts/$proj/get?uri=$d.uri&date=$d.date.time")">$esc.xml($d.uri) ($date.format($d.date) @$date.format("HH:mm", $d.date))</a></li>
+#end
+</ul>
+</div>
+#end
+
+#parse( "base.vm" )
